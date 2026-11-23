@@ -65,12 +65,12 @@ async function calcularIMC() {
 
 async function cadastrarCliente() {
     const dados = {
-        cpf: document.getElementById("cliente_cpf").value,
-        nome: document.getElementById("cliente_nome").value,
-        idade: document.getElementById("cliente_idade").value,
-        endereco: document.getElementById("cliente_endereco").value,
-        bairro: document.getElementById("cliente_bairro").value,
-        contato: document.getElementById("cliente_contato").value
+        cpf: document.getElementById("aluno_cpf").value,
+        nome: document.getElementById("aluno_nome").value,
+        idade: document.getElementById("aluno_idade").value,
+        endereco: document.getElementById("aluno_escola").value,
+        turma_e_ano : document.getElementById("aluno_turma  e ano ").value,
+        contato: document.getElementById("alunno_contato").value
     };
 
     try {
@@ -137,10 +137,10 @@ async function cadastrarUsuario() {
             localStorage.setItem("token", resultado.token);
             window.location.href = "index.html";
         } else {
-            alert("Cadastro inválido!");
+            alert("matricula invalida");
         }
     } catch (erro) {
-        alert("Falha na comunicação com o servidor.");
+        alert("não encontrado o aluno");
     }
 }
 
@@ -161,7 +161,7 @@ async function listarClientes() {
     } catch (erro) {
         const container = document.getElementById("listaClientes");
         if (container) {
-            container.innerHTML = `<div style="color: #721c24; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">⚠️ Falha ao carregar clientes do servidor.</div>`;
+            container.innerHTML = `<div style="color: #721c24; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">⚠️ Falha ao carregar alunos do servidor.</div>`;
         }
     }
 }
@@ -182,31 +182,31 @@ async function buscarClientes() {
         const filtrados = clientes.filter(c => c.cpf && c.cpf.replace(/\D/g, '') === cpfLimpo);
         renderizarClientes(filtrados);
     } catch (erro) {
-        const container = document.getElementById("listaClientes");
+        const container = document.getElementById("listaAlunos");
         if (container) {
             container.innerHTML = `<div style="color: #721c24; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">⚠️ Falha ao buscar cliente.</div>`;
         }
     }
 }
 
-function renderizarClientes(clientes) {
-    const container = document.getElementById("listaClientes");
+function renderizarMatriculas(matriculas) {
+    const container = document.getElementById("listaAlunos");
     if (!container) return;
 
-    if (!clientes || clientes.length === 0) {
-        container.innerHTML = `<div class="no-clients">Nenhum cliente encontrado.</div>`;
+    if (!matriculas || matriculas.length === 0) {
+        container.innerHTML = `<div class="no-matriculas">Nenhum matriculas encontrado.</div>`;
         return;
     }
 
     let html = "";
-    clientes.forEach(cliente => {
+    matricula.forEach(matricula => {
         html += `
-            <div class="client-card">
-                <h3>${cliente.nome || 'Sem Nome'}</h3>
-                <p><strong>CPF:</strong> ${cliente.cpf || '-'}</p>
-                <p><strong>Idade:</strong> ${cliente.idade || '-'} anos</p>
-                <p><strong>Endereço:</strong> ${cliente.endereco || '-'}, ${cliente.bairro || '-'}</p>
-                <p><strong>Contato:</strong> ${cliente.contato || '-'}</p>
+            <div class="matricula-card">
+                <h3>${aluno.nome || 'Sem Nome'}</h3>
+                <p><strong>CPF:</strong> ${aluno.cpf || '-'}</p>
+                <p><strong>Idade:</strong> ${aluno.idade || '-'} anos</p>
+                <p><strong>Endereço:</strong> ${aluno.endereco || '-'}, ${aluno.bairro || '-'}</p>
+                <p><strong>Contato:</strong> ${aluno.contato || '-'}</p>
             </div>
         `;
     });
