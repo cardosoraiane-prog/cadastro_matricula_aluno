@@ -151,35 +151,35 @@ function logout() {
 
 async function listarClientes() {
     // Limpar o input de busca
-    const buscaInput = document.getElementById("busca_cpf");
+    const buscaInput = document.getElementById("busca_id");
     if (buscaInput) buscaInput.value = "";
 
     try {
-        const res = await fetch("http://localhost:3000/clientes");
-        const clientes = await res.json();
-        renderizarClientes(clientes);
+        const res = await fetch("http://localhost:3000/matricula");
+        const matricula = await res.json();
+        renderizarmatricula(matricula);
     } catch (erro) {
-        const container = document.getElementById("listaClientes");
+        const container = document.getElementById("listamatricula");
         if (container) {
             container.innerHTML = `<div style="color: #721c24; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">⚠️ Falha ao carregar alunos do servidor.</div>`;
         }
     }
 }
 
-async function buscarClientes() {
-    const cpfBusca = document.getElementById("busca_cpf").value.trim();
-    if (!cpfBusca) {
+async function buscarmatricula() {
+    const idBusca = document.getElementById("busca_id").value.trim();
+    if (!idBusca) {
         listarClientes();
         return;
     }
 
     try {
-        const res = await fetch("http://localhost:3000/clientes");
+        const res = await fetch("http://localhost:3000/matriculados");
         const clientes = await res.json();
         
         // Filtrar pelo CPF ignorando caracteres não numéricos
         const cpfLimpo = cpfBusca.replace(/\D/g, '');
-        const filtrados = clientes.filter(c => c.cpf && c.cpf.replace(/\D/g, '') === cpfLimpo);
+        const filtrados = clientes.filter(c => c.id && c.id.replace(/\D/g, '') === idLimpo);
         renderizarClientes(filtrados);
     } catch (erro) {
         const container = document.getElementById("listaAlunos");
@@ -203,7 +203,7 @@ function renderizarMatriculas(matriculas) {
         html += `
             <div class="matricula-card">
                 <h3>${aluno.nome || 'Sem Nome'}</h3>
-                <p><strong>CPF:</strong> ${aluno.cpf || '-'}</p>
+                <p><strong>ID:</strong> ${aluno.id || '-'}</p>
                 <p><strong>Idade:</strong> ${aluno.idade || '-'} anos</p>
                 <p><strong>Endereço:</strong> ${aluno.endereco || '-'}, ${aluno.bairro || '-'}</p>
                 <p><strong>Contato:</strong> ${aluno.contato || '-'}</p>
