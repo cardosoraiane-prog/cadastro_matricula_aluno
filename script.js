@@ -68,7 +68,7 @@ async function cadastrarAlunos() {
     
         nome: document.getElementById("nome").value,
         email: document.getElementById("email").value,
-        matricula: document.getElementById("matricula").value,
+        matriculas: document.getElementById("matriculas").value,
         dataNascimento : document.getElementById("dataNascimento").value,
    
     };
