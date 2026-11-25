@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabs com API</title>
+    <title> alunos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="abrirTab(0)">Listar matricula</button>
-        <button class="tab-btn" onclick="abrirTab(1)">Cadastrarmatricula</button>
+        <button class="tab-btn active" onclick="abrirTab(0)">Listar alunos</button>
+        <button class="tab-btn" onclick="abrirTab(1)">Cadastraralunos</button>
     </div>
     <a id="logout" class="logout-link" onclick="logout()">Logout</a>
 
@@ -21,28 +21,28 @@
         <h2>alunos matriculados</h2>
 
         <div class="search-container">
-            <input type="text" id="busca_cpf" placeholder="Buscar por CPF">
-            <button onclick="buscarClientes()">Buscar</button>
-            <button onclick="listarClientes()" style="background: #2e7ec3;">Limpar</button>
+            <input type="text" id="busca_alunos" placeholder="Buscar por alunos">
+            <button onclick="buscaralunos()">Buscar</button>
+            <button onclick="listaralunos()" style="background: #2e7ec3;">Limpar</button>
         </div>
 
-        <div id="listaClientes" class="client-list"></div>
+        <div id="listaalunos" class="alunos-list"></div>
     </div>
 
     <!-- TAB 2 -->
     <div class="tab-content">
-        <h2>Cadastrar Cliente</h2>
+        <h2>Cadastrar  alunos</h2>
 
-        <input type="text" id="cliente_cpf" placeholder="id">
-        <input type="text" id="cliente_nome" placeholder="Nome">
-        <input type="number" id="cliente_idade" placeholder="Idade">
-        <input type="text" id="cliente_endereco" placeholder=" ano  e turma">
-        <input type="text" id="cliente_bairro" placeholder="escola">
-        <input type="text" id="cliente_contato" placeholder="Contato">
+     
+        <input type="text" id="alunos_nome" placeholder="Nome">
+        <input type="text" id="alunos_email" placeholder="email">
+        <input type="text" id="alunos_matriculas" placeholder=" matriculas">
+        <input type="text" id="alunos_dataNacimento" placeholder="dataNacimento">
+       
 
-        <button onclick="alunosMatriculados()">Aluno matriculados</button>
+        <button onclick="cadastrarAlunos()">cadartra alunos</button>
 
-        <div class="resultado" id="resultadoCliente"></div>
+        <div class="resultado" id="resultadoalunos"></div>
     </div>
 
     <script src="script.js"></script>

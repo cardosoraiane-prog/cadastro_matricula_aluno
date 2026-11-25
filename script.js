@@ -63,18 +63,18 @@ async function calcularIMC() {
     }
 }
 
-async function cadastrarCliente() {
+async function cadastrarAlunos() {
     const dados = {
-        cpf: document.getElementById("aluno_cpf").value,
-        nome: document.getElementById("aluno_nome").value,
-        idade: document.getElementById("aluno_idade").value,
-        endereco: document.getElementById("aluno_escola").value,
-        turma_e_ano : document.getElementById("aluno_turma  e ano ").value,
-        contato: document.getElementById("alunno_contato").value
+    
+        nome: document.getElementById("nome").value,
+        email: document.getElementById("email").value,
+        matricula: document.getElementById("matricula").value,
+        dataNascimento : document.getElementById("dataNascimento").value,
+   
     };
 
     try {
-        const res = await fetch("http://localhost:3000/clientes", {
+        const res = await fetch("http://localhost:3000/alunos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -83,9 +83,9 @@ async function cadastrarCliente() {
         });
 
         const resultado = await res.json();
-        document.getElementById("resultadoCliente").innerHTML = formatarResposta(resultado);
+        document.getElementById("resultadoAlunos").innerHTML = formatarResposta(resultado);
     } catch (erro) {
-        document.getElementById("resultadoCliente").innerHTML = formatarResposta({ erro: "Falha na comunicação com o servidor." });
+        document.getElementById("resultadoAlunos").innerHTML = formatarResposta({ erro: "Falha na comunicação com o servidor." });
     }
 }
 
@@ -149,64 +149,63 @@ function logout() {
     window.location.href = 'login.html';
 }
 
-async function listarClientes() {
+async function listarAlunos() {
     // Limpar o input de busca
-    const buscaInput = document.getElementById("busca_id");
+    const buscaInput = document.getElementById("busca_alunos");
     if (buscaInput) buscaInput.value = "";
 
     try {
-        const res = await fetch("http://localhost:3000/matricula");
-        const matricula = await res.json();
-        renderizarmatricula(matricula);
+        const res = await fetch("http://localhost:3000/alunos");
+        constalunos = await res.json();
+        renderizarAlunos(alunos);
     } catch (erro) {
-        const container = document.getElementById("listamatricula");
+        const container = document.getElementById("listaAlunos");
         if (container) {
             container.innerHTML = `<div style="color: #721c24; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">⚠️ Falha ao carregar alunos do servidor.</div>`;
         }
     }
 }
 
-async function buscarmatricula() {
+async function buscaralunos() {
     const idBusca = document.getElementById("busca_id").value.trim();
     if (!idBusca) {
-        listarClientes();
+        listaralunos();
         return;
     }
 
     try {
-        const res = await fetch("http://localhost:3000/matriculados");
-        const clientes = await res.json();
+        const res = await fetch("http://localhost:3000/alunos");
+        const  alunos = await res.json();
         
-        // Filtrar pelo CPF ignorando caracteres não numéricos
-        const cpfLimpo = cpfBusca.replace(/\D/g, '');
-        const filtrados = clientes.filter(c => c.id && c.id.replace(/\D/g, '') === idLimpo);
-        renderizarClientes(filtrados);
+        // Filtrar pelo id ignorando caracteres não numéricos
+        const cpfLimpo = alunosBusca.replace(/\D/g, '');
+        const filtrados = alunos.filter(c => c.id && c.id.replace(/\D/g, '') === idLimpo);
+        renderizaralunos(filtrados);
     } catch (erro) {
         const container = document.getElementById("listaAlunos");
         if (container) {
-            container.innerHTML = `<div style="color: #721c24; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">⚠️ Falha ao buscar cliente.</div>`;
+            container.innerHTML = `<div style="color: #721c24; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">⚠️ Falha ao buscar  matriculas.</div>`;
         }
     }
 }
 
-function renderizarMatriculas(matriculas) {
+function renderizarAlunos(alunos) {
     const container = document.getElementById("listaAlunos");
     if (!container) return;
 
-    if (!matriculas || matriculas.length === 0) {
-        container.innerHTML = `<div class="no-matriculas">Nenhum matriculas encontrado.</div>`;
+    if (!alunos |alunos.length === 0) {
+        container.innerHTML = `<div class="no-alunos">Nenhum alunos encontrado.</div>`;
         return;
     }
 
     let html = "";
-    matricula.forEach(matricula => {
+    alunos.forEach(alunos => {
         html += `
-            <div class="matricula-card">
+            <div class="alunos-card">
                 <h3>${aluno.nome || 'Sem Nome'}</h3>
-                <p><strong>ID:</strong> ${aluno.id || '-'}</p>
-                <p><strong>Idade:</strong> ${aluno.idade || '-'} anos</p>
-                <p><strong>Endereço:</strong> ${aluno.endereco || '-'}, ${aluno.bairro || '-'}</p>
-                <p><strong>Contato:</strong> ${aluno.contato || '-'}</p>
+                <p><strong>email:</strong> ${aluno.email || '-'} anos</p>
+                <p><strong>matricula:</strong> ${aluno.matricula || '-'},
+                <p><strong>dataNacimento:</strong> ${aluno.dataNacimento|| '-'}</p>
             </div>
         `;
     });
@@ -216,8 +215,8 @@ function renderizarMatriculas(matriculas) {
 // Carregar lista de clientes automaticamente ao abrir index.html
 if (window.location.pathname.endsWith('index.html') && localStorage.getItem('token')) {
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', listarClientes);
+        document.addEventListener('DOMContentLoaded', listaralunos);
     } else {
-        listarClientes();
+        listaralunos();
     }
 }
